@@ -2,7 +2,7 @@
 #include "parse.h"
 #include "runtime.h"
 #include "statement.h"
-#include "test_runner.h"
+#include "test_runner_p.h"
 
 #include <iostream>
 
@@ -46,7 +46,7 @@ print None
 
     ostringstream output;
     RunMythonProgram(input, output);
-
+    std::string str=output.str();
     ASSERT_EQUAL(output.str(), "57\n10 24 -8\nhello\nworld\nTrue False\n\nNone\n");
 }
 
@@ -107,7 +107,7 @@ print y.value
 
     ostringstream output;
     RunMythonProgram(input, output);
-
+    std::string str=output.str();
     ASSERT_EQUAL(output.str(), "2\n3\n");
 }
 
@@ -116,13 +116,14 @@ void TestAll() {
     parse::RunOpenLexerTests(tr);
     runtime::RunObjectHolderTests(tr);
     runtime::RunObjectsTests(tr);
-    ast::RunUnitTests(tr);
-    TestParseProgram(tr);
+      ast::RunUnitTests(tr);
+
+ TestParseProgram(tr);
 
     RUN_TEST(tr, TestSimplePrints);
-    RUN_TEST(tr, TestAssignments);
-    RUN_TEST(tr, TestArithmetics);
-    RUN_TEST(tr, TestVariablesArePointers);
+   RUN_TEST(tr, TestAssignments);
+   RUN_TEST(tr, TestArithmetics);
+     RUN_TEST(tr, TestVariablesArePointers);
 }
 
 }  // namespace
